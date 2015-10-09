@@ -10,12 +10,12 @@ namespace Zad_1
     {
         private const string DefaultPath = @"Matrix.txt";
 
-        public static double[][] LoadMatrixFromFile(string path = DefaultPath)
+        public static Matrix LoadMatrixFromFile(string path = DefaultPath)
         {
             List<double[]> matrixTmp = new List<double[]>();
             using (StreamReader reader = new StreamReader(path))
             {
-                string line = null;
+                string line;
                 while ((line = reader.ReadLine()) != null)
                 {
                     line = line.Replace('.', ',');
@@ -57,14 +57,14 @@ namespace Zad_1
                 matrix[i] = matrixTmp[i].ToArray();
             }
 
-            int expectedRowLength = matrixTmp.Count + 1;
-            foreach (double[] doubles in matrix)
-            {
-                if (doubles.Length != expectedRowLength)
-                {
-                    throw new WrongMatrixSizeException("Matrix for this exercise must have (i, i+1) size");
-                }
-            }
+//            int expectedRowLength = matrixTmp.Count + 1;
+//            foreach (double[] doubles in matrix)
+//            {
+//                if (doubles.Length != expectedRowLength)
+//                {
+//                    throw new WrongMatrixSizeException("Matrix for this exercise must have (i, i+1) size");
+//                }
+//            }
 
 //            foreach (double[] doubles in matrix)
 //            {
@@ -75,7 +75,7 @@ namespace Zad_1
 //                Console.WriteLine();
 //            }
 
-            return matrix;
+            return new Matrix(matrix);
         }
     }
 }

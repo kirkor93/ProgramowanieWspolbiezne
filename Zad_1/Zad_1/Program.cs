@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 
 namespace Zad_1
@@ -7,9 +8,11 @@ namespace Zad_1
     {
         static void Main(string[] args)
         {
-            double[][] loadedMatrix = FileLoader.LoadMatrixFromFile();
-            string result = CrammerMethod.Start(loadedMatrix);
-            Console.WriteLine(result);
+            Matrix loadedMatrix = FileLoader.LoadMatrixFromFile();
+            string test = loadedMatrix.Determinant.ToString(CultureInfo.InvariantCulture);
+            Console.WriteLine("Calculated det: {0}", test);
+//            string result = CrammerMethod.Start(loadedMatrix);
+//            Console.WriteLine(result);
 
             Console.Write("Press enter to continue: ");
             Console.ReadLine();
