@@ -8,12 +8,10 @@ namespace Zad_1
         static void Main(string[] args)
         {
             Matrix loadedMatrix = FileLoader.LoadMatrixFromFile();
-            //loadedMatrix.Print();
-            //string test = loadedMatrix.Determinant.ToString(CultureInfo.InvariantCulture);
-            //Console.WriteLine("Calculated det: {0}, rows: {1}, columns: {2}", test, loadedMatrix.Rows, loadedMatrix.Columns);
-            //loadedMatrix.RemoveColumn(3).Print();
-
-            CrammerMethod.Start(loadedMatrix);
+            Console.WriteLine("Loaded matrix: ");
+            loadedMatrix.Print();
+            Console.WriteLine();
+            Console.WriteLine(CrammerMethod.Start(loadedMatrix));
 
             Console.Write("Press enter to continue: ");
             Console.ReadLine();
