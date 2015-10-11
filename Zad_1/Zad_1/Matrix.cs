@@ -13,6 +13,16 @@ namespace Zad_1
     {
         private double[][] _values;
 
+        public int Rows
+        {
+            get { return _values != null ? _values.Length : 0; }
+        }
+
+        public int Columns
+        {
+            get { return (_values != null && _values.Length > 0 && _values[0] != null) ? _values[0].Length : 0; }
+        }
+
         public double Determinant
         {
             get
@@ -106,12 +116,83 @@ namespace Zad_1
             }
         }
 
-        public Matrix RemoveRow(int index)
+        public Matrix(Matrix original)
         {
-            Matrix tmp = new Matrix(_values);
+            _values = new double[original._values.Length][];
+            for (int i = 0; i < _values.Length; i++)
+            {
+                _values[i] = new double[original._values[i].Length];
+            }
 
+            for (int i = 0; i < _values.Length; i++)
+            {
+                for (int j = 0; j < _values[i].Length; j++)
+                {
+                    _values[i][j] = original._values[i][j];
+                }
+            }
+        }
 
-            return tmp;
+        public Matrix GetRow(int index)
+        {
+            double [][]tmp = new double[1][];
+            tmp[0] = new double[_values[index].Length];
+            for (int i = 0; i < _values[index].Length; i++)
+            {
+                tmp[0][i] = _values[index][i];
+            }
+
+            return new Matrix(tmp);
+        }
+
+        public Matrix GetColumn(int index)
+        {
+            double[][] tmp = new double[_values.Length][];
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                tmp[i] = new double[1];
+            }
+            for (int i = 0; i < _values.Length; i++)
+            {
+                tmp[i][0] = _values[i][index];
+            }
+
+            return new Matrix(tmp);
+        }
+
+        public Matrix RemoveColumn(int index)
+        {
+            double[][] tmp = new double[_values.Length][];
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                tmp[i] = new double[_values[i].Length - 1];
+            }
+            for (int i = 0; i < _values.Length; i++)
+            {
+                for (int j = 0, y = 0; j < _values[i].Length; j++, y++)
+                {
+                    if (j == index)
+                    {
+                        y--;
+                        continue;
+                    }
+                    tmp[i][y] = _values[i][j];
+                }
+            }
+
+            return new Matrix(tmp);
+        }
+
+        public void Print()
+        { 
+            foreach (double[] d in _values)
+            {
+                foreach (double d1 in d)
+                {
+                    Console.Write(d1 + " ");
+                }
+                Console.WriteLine();
+            }
         }
 
         public double GetValue(int i, int j)
