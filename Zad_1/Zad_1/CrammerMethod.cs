@@ -7,6 +7,7 @@ namespace Zad_1
     {
         private static Semaphore _semaphore = new Semaphore(1, 1);
         private static Thread[] _threads;
+        private static Matrix _startMatrix;
 
         public static string Start(Matrix matrix)
         {
@@ -15,27 +16,38 @@ namespace Zad_1
                 throw new InvalidOperationException("Already running");
             }
 
-            //_threads = new Thread[];
+            _startMatrix = matrix;
+            _threads = new Thread[matrix.Columns - 1];
 
-            Matrix left = matrix.RemoveColumn(matrix.Columns - 1);
-            Matrix right = matrix.GetColumn(matrix.Columns - 1);
-
-            double mainDet = left.Determinant;
-            double[] otherDets = new double[left.Columns];
-
-            for (int i = 0; i < left.Columns; i++)
+            for (int i = 0; i < matrix.Columns - 1; i++)
             {
-                Matrix tmp = new Matrix(left);
-                for(int j = 0 ; j < tmp.Rows ; j ++)
-                {
-                    tmp.SetValue(j, i, right.GetValue(j, 0));
-                }
-
-                otherDets[i] = tmp.Determinant;
-                Console.WriteLine(i + ": " + otherDets[i] / mainDet);
+                _threads[i] = new Thread(new ParameterizedThreadStart(CountOne));
+                _threads[i].Start(i);
             }
 
+            _threads = null;
             return null;
+        }
+
+        private static void CountOne(object columnNumber)
+        {
+            Console.WriteLine($"Thread {Thread.CurrentThread} started counting column {columnNumber}");
+            //Thread.Sleep(10000);
+
+            _semaphore.WaitOne();
+            Matrix tmp = new Matrix(_startMatrix);
+            _semaphore.Release();
+
+            Matrix left = tmp.RemoveColumn(tmp.Columns - 1);
+            Matrix right = tmp.GetColumn(tmp.Columns - 1);
+
+            for (int j = 0; j < tmp.Rows; j++)
+            {
+                left.SetValue(j, (int)columnNumber, right.GetValue(j, 0));
+            }
+
+            Console.WriteLine(left.Determinant);
+            //Console.WriteLine(i + ": " + otherDets[i] / mainDet);
         }
     }
 
