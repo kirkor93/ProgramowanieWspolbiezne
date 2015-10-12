@@ -12,7 +12,6 @@ namespace Zad_1
             loadedMatrix.Print();
             Console.WriteLine();
             Console.WriteLine(CrammerMethod.Start(loadedMatrix));
-
             Console.Write("Press enter to continue: ");
             Console.ReadLine();
         }

@@ -44,7 +44,7 @@ namespace Zad_1
             {
                 message = 
                     _results.Distinct().Count() > 1 ? 
-                    "The system has no solutions." : "The system has infinitely many solutions.";
+                    "The system has no solutions." : "The system has infinitely many solutions.\n";
             }
             else
             {
