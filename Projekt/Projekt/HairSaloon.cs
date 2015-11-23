@@ -41,7 +41,7 @@ namespace Projekt
         public void ExitChairRoom(Human human)
         {
             _hairDressingChair = null;
-            _waitingRoom.Add(human);
+            //_waitingRoom.Add(human);
         }
 
         public bool CanEnterChairRoom()
@@ -52,9 +52,9 @@ namespace Projekt
                 return false;
         }
 
-        public void ExitWaitRoom(Human human)
-        {
-            _waitingRoom.Remove(human);
-        }
+        //public void ExitWaitRoom(Human human)
+        //{
+        //    _waitingRoom.Remove(human);
+        //}
     }
 }

@@ -8,7 +8,7 @@ namespace Projekt
 {
     class Program
     {
-        public int peopleCount = 3;
+        public static int peopleCount = 8;
 
         static void Main(string[] args)
         {
@@ -16,7 +16,7 @@ namespace Projekt
 
             List<Human> people = new List<Human>();
 
-            for(int i = 0; i < 5; ++i)
+            for (int i = 0; i < Program.peopleCount; ++i)
             {
                 people.Add(new Human(mainSallon, i + 1));
                 people[i].HumanThread.Start();

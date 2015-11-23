@@ -33,11 +33,12 @@ namespace Projekt
                     GoOnChair();
                     break;
                 case HumanState.OnChair:
-                    GoToWaitRoom();
-                    break;
-                case HumanState.InsideAfter:
+                    //GoToWaitRoom();
                     GoOutside();
                     break;
+                //case HumanState.InsideAfter:
+                //    GoOutside();
+                //    break;
             }
         }
         
@@ -87,28 +88,28 @@ namespace Projekt
             }
         }
 
-        private void GoToWaitRoom()
-        {
-            if (Monitor.TryEnter(Saloon.ChairLock))
-            {
-                try
-                {
-                    Thread.Sleep(500);
-                    Console.WriteLine(string.Format("Human {0} Entered Waiting", _index));
-                    State = HumanState.InsideAfter;
-                    Saloon.ExitChairRoom(this);
-                }
-                finally
-                {
-                    Monitor.Exit(Saloon.ChairLock);
-                    Run();
-                }
-            }
-            else
-            {
-                Wait();
-            }
-        }
+        //private void GoToWaitRoom()
+        //{
+        //    if (Monitor.TryEnter(Saloon.ChairLock))
+        //    {
+        //        try
+        //        {
+        //            Thread.Sleep(500);
+        //            Console.WriteLine(string.Format("Human {0} Entered Waiting", _index));
+        //            State = HumanState.InsideAfter;
+        //            Saloon.ExitChairRoom(this);
+        //        }
+        //        finally
+        //        {
+        //            Monitor.Exit(Saloon.ChairLock);
+        //            Run();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Wait();
+        //    }
+        //}
 
         private void GoOutside()
         {
@@ -119,7 +120,8 @@ namespace Projekt
                     Thread.Sleep(500);
                     Console.WriteLine(string.Format("Human {0} Exited Saloon", _index));
                     State = HumanState.Outside;
-                    Saloon.ExitWaitRoom(this);
+                    //Saloon.ExitWaitRoom(this);
+                    Saloon.ExitChairRoom(this);
                 }
                 finally
                 {
@@ -134,7 +136,9 @@ namespace Projekt
 
         private void Wait()
         {
-            if(State == HumanState.InsideBefore) Console.WriteLine(string.Format("Human {0} Wait", _index));
+            if (State == HumanState.Outside) Console.WriteLine(string.Format("Human {0} WaitOutside", _index));
+            if(State == HumanState.InsideBefore) Console.WriteLine(string.Format("Human {0} WaitInside", _index));
+            if (State == HumanState.OnChair) Console.WriteLine(string.Format("Human {0} WaitExit", _index));
             Thread.Sleep(1000);
             Run();
         }
@@ -145,6 +149,6 @@ namespace Projekt
         Outside,
         InsideBefore,
         OnChair,
-        InsideAfter
+        //InsideAfter
     }
 }
