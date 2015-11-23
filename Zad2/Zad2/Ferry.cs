@@ -12,12 +12,11 @@ namespace Zad2
     {
     #region Variables&Properties
         public const int MaxWaitTime = 2;
-        public const int FerryCapacity = 3;
-        public const int CarsCount = 4;
+        public const int FerryCapacity = 5;
+        public const int CarsCount = 11;
         
         public Stack<Car> Cars;
         public Thread FerryThread;
-        public Thread TimerThread;
         private Stopwatch _timer;
         private int _courses = 0;
         
@@ -91,10 +90,10 @@ namespace Zad2
             ++_courses;
             
             Monitor.PulseAll(this);
-            if (_courses == (CarsCount % FerryCapacity + 1))
-            {
-                FerryThread.Abort();
-            }
+            //if (_courses == (CarsCount % FerryCapacity + 1))
+            //{
+            //    FerryThread.Abort();
+            //}
             Monitor.Wait(this);
             MoveFerry();
         }
